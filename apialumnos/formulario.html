@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>FORMULARIO ALTA ALUMNOS</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='formulario.css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src='formulario.js'></script>
+</head>
+
+<body>
+    <!-- vamos a crear un formulario, para crear alumnos (POST) 
+    en nuestro servidor local -->
+    <form id="forma">
+    <!-- <form id="forma" onsubmit="postAlumno()" method="POST"> -->
+
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Intro nombre" required pattern=".{4,15}">
+        </div>
+
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="apellido" required placeholder="Intro apellido">
+        </div>
+
+        <div class="mb-3">
+            <label for="edad" class="form-label">Edad</label>
+            <input type="number" class="form-control" id="edad" required max="130" min="1">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email </label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
+        </div>
+        <!-- <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div> -->
+        <!-- <button type="submit" class="btn btn-primary">CREAR</button> -->
+        <button type="button" onclick="postAlumno()" class="btn btn-primary">CREAR</button>
+    </form>
+
+</body>
+
+</html>
