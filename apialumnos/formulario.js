@@ -1,6 +1,6 @@
 var xhr = new XMLHttpRequest();
-//const URL_SERVIDOR_POST = "http://localhost:3000/alumno";
-const URL_SERVIDOR_POST = "https://my-json-server.typicode.com/valexx55/alumnostardes/alumno";
+const URL_SERVIDOR_POST = "http://localhost:3000/alumno";
+//const URL_SERVIDOR_POST = "https://my-json-server.typicode.com/valexx55/alumnostardes/alumno";
 
 
 console.log("fecha actual " + new Date());
@@ -35,7 +35,9 @@ function postAlumno()
         {
             if (xhr.status==201)
             {
-                console.log('Alumno creado');
+                console.log('Alumno creado ');
+                alert("Alumno Insertado correctamente"  + xhr.responseText);
+                console.log(xhr.responseText);
             }
             else {
                 console.error ('Error haciendo post de alumno');

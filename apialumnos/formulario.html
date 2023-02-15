@@ -15,12 +15,14 @@
 <body>
     <!-- vamos a crear un formulario, para crear alumnos (POST) 
     en nuestro servidor local -->
-    <form id="forma">
+    
+    <!--EVITAMOS la redirección -->
+    <form id="forma" onsubmit="postAlumno(); return false;" method="POST">
     <!-- <form id="forma" onsubmit="postAlumno()" method="POST"> -->
 
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" placeholder="Intro nombre" required pattern=".{4,15}">
+            <input type="text" class="form-control" id="nombre" placeholder="Intro nombre" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('  NOMBRE Enter User Name Here')" required pattern=".{4,15}">
         </div>
 
         <div class="mb-3">
@@ -36,12 +38,9 @@
             <label for="email" class="form-label">Email </label>
             <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
         </div>
-        <!-- <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div> -->
-        <!-- <button type="submit" class="btn btn-primary">CREAR</button> -->
-        <button type="button" onclick="postAlumno()" class="btn btn-primary">CREAR</button>
+        
+        <button type="submit" class="btn btn-primary">CREAR</button>
+        <!-- <button type="button" onclick="postAlumno()" class="btn btn-primary">CREAR</button> -->
     </form>
 
 </body>
