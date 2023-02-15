@@ -8,69 +8,6 @@
       "email": "roberto@unisys.es"
     },
     {
-      "nombre": "Rosa",
-      "apellido": "Montes",
-      "edad": 53,
-      "email": "rosa@unisys.es",
-      "id": 2
-    },
-    {
-      "nombre": "asg",
-      "apellido": "asfh",
-      "edad": "69",
-      "email": "casdcas@asf",
-      "id": 3
-    },
-    {
-      "nombre": "PEPE",
-      "apellido": "lopez",
-      "edad": "79",
-      "email": "pepe@kas.es",
-      "id": 4
-    },
-    {
-      "nombre": "PEPE2",
-      "apellido": "lopez",
-      "edad": "79",
-      "email": "pepe@kas.es",
-      "id": 5
-    },
-    {
-      "nombre": "PEPE2",
-      "apellido": "lopez",
-      "edad": "79",
-      "email": "pepe@kas.es",
-      "id": 6
-    },
-    {
-      "nombre": "PEPE2",
-      "apellido": "lopez",
-      "edad": "79",
-      "email": "pepe@kas.es",
-      "id": 7
-    },
-    {
-      "nombre": "PEPE2",
-      "apellido": "lopez",
-      "edad": "79",
-      "email": "pepe@kas.es",
-      "id": 8
-    },
-    {
-      "nombre": "VASE",
-      "apellido": "MORENO",
-      "edad": "38",
-      "email": "valerianomorenog@mail.com",
-      "id": 9
-    },
-    {
-      "nombre": "VALERIANO",
-      "apellido": "GARCIA",
-      "edad": "38",
-      "email": "pepe@correo.es",
-      "id": 10
-    },
-    {
       "nombre": "VASE",
       "apellido": "MORENO",
       "edad": "38",
@@ -111,6 +48,27 @@
       "edad": "38",
       "email": "getele32@gmail.com",
       "id": 16
+    },
+    {
+      "nombre": "VALERIANO",
+      "apellido": "MORENO",
+      "edad": "38",
+      "email": "mp@gal.es",
+      "id": 17
+    },
+    {
+      "nombre": "VALERIANO",
+      "apellido": "MORENO",
+      "edad": "38",
+      "email": "mp@gal.es",
+      "id": 18
+    },
+    {
+      "nombre": "VASE",
+      "apellido": "MORENO",
+      "edad": "38",
+      "email": "valerianomorenog@mail.com",
+      "id": 19
     }
   ],
   "posts": [
