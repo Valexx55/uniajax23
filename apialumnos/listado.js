@@ -164,3 +164,45 @@ function editarAlumno (event)
     //NAVEGO A AL FORMULARIO
     window.location.href = 'formulario.html?id='+id_alumno_editar;
 }
+
+function ordenarListadoPorEdad()
+{
+    console.log("ordenarListadoPorEdad()");
+    console.log("ANTES ");
+    lista_alummos.forEach (a=>console.log(a));
+
+    lista_alummos.sort(
+        (alumno1, alumno2) =>
+        {
+           return alumno1.edad-alumno2.edad;
+        }
+    );
+    //2 eliminar la lista acutal
+    document.getElementById("lista").innerHTML ="";
+    //3 repintar llamando a mostrar alumnos ordenados
+    mostrarAlumnos(lista_alummos);
+
+    console.log("DESPUÉS ");
+    lista_alummos.forEach (a=>console.log(a));
+}
+
+function ordenarListadoPorId()
+{
+    console.log("ordenarListadoPorId()");
+
+    console.log("ANTES ");
+    lista_alummos.forEach (a=>console.log(a));
+    lista_alummos.sort(
+        (alumno1, alumno2) =>
+        {
+           return alumno1.id-alumno2.id;
+        }
+    );
+
+    //2 eliminar la lista acutal
+    document.getElementById("lista").innerHTML ="";
+    //3 repintar llamando a mostrar alumnos ordenados
+    mostrarAlumnos(lista_alummos);
+    console.log("DESPUÉS ");
+    lista_alummos.forEach (a=>console.log(a));
+}
