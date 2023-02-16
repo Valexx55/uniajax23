@@ -1,4 +1,5 @@
-onload=cargarPerroAleatorio;
+//onload=cargarPerroAleatorio;
+onload=pedirPerroAleatorioConFetch;
 
 let xhr = new XMLHttpRequest();
 const URL_PERRO_ALEATORIOS = "https://dog.ceo/api/breeds/image/random";
@@ -70,4 +71,18 @@ function mostrarPerro(info_perro_json)
     let raza = array_split[array_split.length-2];
     console.log(raza);
     document.getElementsByTagName("p")[0].innerHTML=raza.toUpperCase();
+}
+
+function pedirPerroAleatorioConFetch ()
+{
+    console.log("USANDO FETCH");
+    fetch(URL_PERRO_ALEATORIOS) //SI NO PONGO MÉTODO, POR DEFECTO ES GET
+    .then((respuesta)=> respuesta.json())
+    .then((perrojson) => {
+        console.log(perrojson);
+        console.log("EL PERRO VOLVIO CON FETCH");
+        mostrarPerro (perrojson);
+
+    });
+    console.log("FIN DE USANDO FETCH");
 }
