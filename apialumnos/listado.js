@@ -17,7 +17,7 @@ function obtenerAlumnos ()
             console.log(" ha llegado la respuesta al GET y bien!");
             lista_alummos = JSON.parse(xhr.responseText);
             console.log(lista_alummos);
-            //TODO: MOSTRAR LOS ALUMNOS
+            
             mostrarAlumnos (lista_alummos);
          } else {
             console.error("NO se ha podido recuperar los datos");
@@ -38,7 +38,7 @@ function mostrarAlumnos (lista_alummos)
 function mostrarAlumno (alumno)
 {
     console.log(alumno);
-    //TODO: CREAR UN DIV COMO EL DEL EJEMPLO Y AÑADIRLO AL DIV DE LA LISTA
+    
     let imagen = document.createElement("img");
     //<img  class="card-img-top" alt="Foto Alumno"src="https://randomuser.me/api/portraits/women/1.jpg">
     //TODO si es par una mujer si no un hombre
@@ -91,6 +91,8 @@ function mostrarAlumno (alumno)
     botoneditar.type = "button";
     botoneditar.innerHTML = "EDITAR";
     botoneditar.className = "btn btn-success";
+    botoneditar.addEventListener('click', editarAlumno);
+    botoneditar.dataset.id = alumno.id;
 
     cuerpo.append(botonborrar, botoneditar);
 
@@ -105,8 +107,7 @@ function mostrarAlumno (alumno)
 function borrarAlumno (event)
 {
     console.log("BORRAR ALUMNO!");
-    //TODO: hacemos petición AJAX con DELETE
-    //console.log(event.target);
+   
     console.log(event.target.dataset.id);
     deleteAlumnos (event.target.dataset.id);
 }
@@ -146,4 +147,20 @@ function deleteAlumnos (id)
     console.log(`llamando a DELETE con ${url}`);
     xhr.open('DELETE',url, true );
     xhr.send(null);
+}
+
+function editarAlumno (event) 
+{
+    let id_alumno_editar =  event.target.dataset.id;
+    console.log("Editando a " + id_alumno_editar);
+    //OBTENGO EL OBJETO QUE VOY A EDITAR 
+    let lista_alumno_ed = lista_alummos.filter(alumno=> alumno.id==id_alumno_editar);
+    console.log(lista_alumno_ed[0]);
+    let alumno_editar = lista_alumno_ed[0];
+    let alumno_json = JSON.stringify(alumno_editar);
+   
+    //Y LO GUARDO EN EL LOCAL STORAGE
+    localStorage.setItem('alumno_edicion', alumno_json);
+    //NAVEGO A AL FORMULARIO
+    window.location.href = 'formulario.html?id='+id_alumno_editar;
 }

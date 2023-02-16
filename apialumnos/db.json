@@ -1,31 +1,17 @@
 {
   "alumno": [
     {
-      "id": 1,
-      "nombre": "Roberto",
+      "nombre": "Roberta",
       "apellido": "Moreno",
-      "edad": 23,
-      "email": "roberto@unisys.es"
+      "edad": "23",
+      "email": "roberto@unisys.es",
+      "id": 1
     },
     {
-      "nombre": "VASE",
-      "apellido": "MORENO",
-      "edad": "38",
-      "email": "valerianomorenog@mail.com",
-      "id": 11
-    },
-    {
-      "nombre": "VALERIANO",
-      "apellido": "GARCIA",
-      "edad": "38",
-      "email": "pepe@correo.es",
-      "id": 12
-    },
-    {
-      "nombre": "VASE",
-      "apellido": "MORENO",
-      "edad": "38",
-      "email": "valerianomorenog@mail.com",
+      "nombre": "Valentina",
+      "apellido": "Peris",
+      "edad": "42",
+      "email": "valentina@correo.com",
       "id": 13
     },
     {
@@ -43,13 +29,6 @@
       "id": 15
     },
     {
-      "nombre": "vale",
-      "apellido": "MORENO",
-      "edad": "38",
-      "email": "getele32@gmail.com",
-      "id": 16
-    },
-    {
       "nombre": "VALERIANO",
       "apellido": "MORENO",
       "edad": "38",
@@ -57,8 +36,8 @@
       "id": 17
     },
     {
-      "nombre": "VALERIANO",
-      "apellido": "MORENO",
+      "nombre": "VALERIANa",
+      "apellido": "perez",
       "edad": "38",
       "email": "mp@gal.es",
       "id": 18
