@@ -1,4 +1,4 @@
-console.log("HOLA estoy en pruebas");
+
 
 /*const URL_PERRO_ALEATORIOS = "https://dog.ceo/api/breeds/image/random";
 fetch(URL_PERRO_ALEATORIOS) //SI NO PONGO MÉTODO, POR DEFECTO ES GET
@@ -16,6 +16,49 @@ fetch(URL_PERRO_ALEATORIOS) //SI NO PONGO MÉTODO, POR DEFECTO ES GET
     - SI TIENE ALGÚN NÚMERO
     */
 
+
+function contineMayusculas (pwd)
+{
+    let p = new Promise ( (ok, ko) =>
+    {
+        setTimeout(
+            ()=> {
+                if (/[A-Z]/.test(pwd)) //pwd contiene alguna mayúscula
+                {
+                    console.log("ok mayus");
+                    ok(pwd);
+                } else 
+                {
+                    console.log("KO mayus");
+                    ko();
+                }
+            }  ,1500);
+    });
+
+    return p;
+}
+
+
+function contineNumeros (pwd)
+{
+    let p = new Promise ( (ok, ko) =>
+    {
+        setTimeout(
+            ()=> {
+                if (/[0-9]/.test(pwd)) //pwd contiene algún numero
+                {
+                    console.log("ok NUM");
+                    ok(pwd);
+                } else 
+                {
+                    console.log("KO NUM");
+                    ko();
+                }
+            }  ,1500);
+    });
+
+    return p;
+}
 
 function tamanioSuperiorA8 (pwd)
 {
@@ -37,11 +80,18 @@ function tamanioSuperiorA8 (pwd)
 
     return p;
 }
+console.log("HOLA estoy en pruebas INICIO");
 
-tamanioSuperiorA8("holahol")
-.then (pwdCorrecta)
-.catch (pwdInCorrecta);
+tamanioSuperiorA8("Holahola7")
+.then (p => contineMayusculas(p))
+.then (p => contineNumeros(p))
+.then(pwdCorrecta)
+.catch(pwdInCorrecta);
+
+//.then (pwdCorrecta)
+//.catch (pwdInCorrecta);
 //.then(pwdCorrecta, pwdInCorrecta);
+console.log("HOLA estoy en pruebas FINAL");
 
 function pwdCorrecta ()
 {
