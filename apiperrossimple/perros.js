@@ -100,7 +100,7 @@ function pedirPerroAleatorioConFetch ()
     console.log("FIN DE USANDO FETCH");
 }
 
-onload=pedirPerroAleatorioConFetch2().then((perro)=>mostrarPerro(perro));
+//onload=pedirPerroAleatorioConFetch2().then((perro)=>mostrarPerro(perro));
 
 async function pedirPerroAleatorioConFetch2()
 {
@@ -110,11 +110,13 @@ async function pedirPerroAleatorioConFetch2()
     //let resutaldo = fetch(URL_PERRO_ALEATORIOS).then((respuesta)=> respuesta.json());
     //CON AWAIT, ESPERAMOS HASTA QUE LA PROMESA SE CUMPLE
     let resutaldo = await fetch(URL_PERRO_ALEATORIOS).then((respuesta)=> respuesta.json());
-    console.log('resutaldo = ');
-    console.log(resutaldo);
+   /* console.log('resutaldo = ');
+    console.log(resutaldo);*/
     return resutaldo;
    // mostrarPerro(resutaldo);
 }
+
+
 
  //pido perros mientras arrayperros-lenght < nperros
         //obtengo perro
@@ -143,19 +145,94 @@ async function pedirPerrosRaza (nperros, raza)
     return array_perros;
 }
 
+async function pedirPerrosRazaConIntentos (nperros, raza, maxintentos)
+{
+    let array_perros = [];
+
+    let intentos =0;
+    let perro_aux;
+    while (array_perros.length < nperros)        
+    {
+         perro_aux = await fetch(URL_PERRO_ALEATORIOS).then(cuerpo=> cuerpo.json());
+         console.log("perro aux ");
+         console.log(perro_aux);
+         if (perro_aux.message.indexOf(raza)!=-1)
+         { //este perro es de la raza que busco
+            array_perros.push(perro_aux);
+            console.log("PERRO DE LA RAZA BUSCADA");
+         }
+         intentos++;
+         if (intentos>maxintentos)
+         {
+            throw new Error('Número de intentos superado');
+         }
+    }
+
+    return array_perros;
+}
+
 
 function selPerro(evento) {
     console.log(evento.value);
     let raza = evento.value;
     console.log("sel perro " + raza);
     //MOSTRAR GIF/ESPERA
-    document.getElementById('cajaespera').hidden=false;
-    pedirPerrosRaza (3, raza).then((arrayp) => {
-        //QUITAR GIF ESPERA
-        document.getElementById('cajaespera').hidden=true;
+    // document.getElementById('cajaespera').hidden=false;
+    // pedirPerrosRaza (3, raza).then((arrayp) => {
+    //     //QUITAR GIF ESPERA
+    //     document.getElementById('cajaespera').hidden=true;
+    //     alert("perros recuperados");
+    //     arrayp.forEach((perro)=>{console.log(perro);})
+    // });
+    // console.log("fin sel perro " + raza);
+
+    //PARA USAR OPCIÓN ONREJECTED --> 
+    pedirPerrosRazaConIntentos (3, raza, 100)
+    .then((arrayp) => 
+      {
         alert("perros recuperados");
         arrayp.forEach((perro)=>{console.log(perro);})
-    });
-    console.log("fin sel perro " + raza);
+      }  
+    ).catch((error)=> {console.log("numero de intentos supertado " +error);});
     
 }
+
+//PROMISE ALL
+//console.log("usando Promise ALL");
+/*pedirPerros(50).
+then(
+    (ap) => console.log(ap.length)
+);
+async function pedirPerros (nperros)
+{
+    let array_perros = [];
+    let array_requests = [];
+
+    for (let i=0; i < nperros; i++)
+    {
+        array_requests.push(URL_PERRO_ALEATORIOS);
+    }
+
+    //para cada req, genero una promesa
+
+    array_perros = await Promise.all (array_requests.map( async (peticion) =>
+    {
+        let respuesta = await fetch(peticion).then(res => res.json());
+        return respuesta;
+    }) )
+
+
+    return array_perros;
+}*/
+
+//PROMISE RACE
+console.log("usando Promise RACE");
+let promesa2 = new Promise ((ok, ko) => {
+    setTimeout(ok, 200, 'timeout'); //ok ('timeout')
+})
+
+Promise.race( [pedirPerroAleatorioConFetch2(), promesa2])
+.then((value)=> {
+    console.log("GANADOR ");
+    console.log(value);
+});
