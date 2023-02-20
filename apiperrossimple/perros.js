@@ -1,5 +1,6 @@
 //onload=cargarPerroAleatorio;
-onload=pedirPerroAleatorioConFetch;
+//onload=pedirPerroAleatorioConFetch;
+
 
 let xhr = new XMLHttpRequest();
 const URL_PERRO_ALEATORIOS = "https://dog.ceo/api/breeds/image/random";
@@ -77,7 +78,19 @@ function pedirPerroAleatorioConFetch ()
 {
     console.log("USANDO FETCH");
     fetch(URL_PERRO_ALEATORIOS) //SI NO PONGO MÉTODO, POR DEFECTO ES GET
-    .then((respuesta)=> respuesta.json())
+    .then((respuesta)=> {
+        console.log(respuesta.ok);
+        console.log(respuesta.statusText);
+        console.log(respuesta.status);
+        console.log(respuesta.body);
+
+        for (const cabecera of respuesta.headers.entries()) {
+            console.log(`${cabecera[0]}: ${cabecera[1]}`);
+         }
+        
+        
+        return respuesta.json();
+    } )
     .then((perrojson) => {
         console.log(perrojson);
         console.log("EL PERRO VOLVIO CON FETCH");
@@ -85,4 +98,64 @@ function pedirPerroAleatorioConFetch ()
 
     });
     console.log("FIN DE USANDO FETCH");
+}
+
+onload=pedirPerroAleatorioConFetch2().then((perro)=>mostrarPerro(perro));
+
+async function pedirPerroAleatorioConFetch2()
+{
+    // let cuerpo = await fetch(URL_PERRO_ALEATORIOS);
+    // let resutaldo = await cuerpo.json();
+    //SIN AWIT, NO ESPERA EL RESULTADO
+    //let resutaldo = fetch(URL_PERRO_ALEATORIOS).then((respuesta)=> respuesta.json());
+    //CON AWAIT, ESPERAMOS HASTA QUE LA PROMESA SE CUMPLE
+    let resutaldo = await fetch(URL_PERRO_ALEATORIOS).then((respuesta)=> respuesta.json());
+    console.log('resutaldo = ');
+    console.log(resutaldo);
+    return resutaldo;
+   // mostrarPerro(resutaldo);
+}
+
+ //pido perros mientras arrayperros-lenght < nperros
+        //obtengo perro
+        //pregunto raza
+        //¿es de la raza buscada?
+            //si, lo add al array
+            //no, paso
+
+async function pedirPerrosRaza (nperros, raza)
+{
+    let array_perros = [];
+
+    let perro_aux;
+    while (array_perros.length < nperros)        
+    {
+         perro_aux = await fetch(URL_PERRO_ALEATORIOS).then(cuerpo=> cuerpo.json());
+         console.log("perro aux ");
+         console.log(perro_aux);
+         if (perro_aux.message.indexOf(raza)!=-1)
+         { //este perro es de la raza que busco
+            array_perros.push(perro_aux);
+            console.log("PERRO DE LA RAZA BUSCADA");
+         }
+    }
+
+    return array_perros;
+}
+
+
+function selPerro(evento) {
+    console.log(evento.value);
+    let raza = evento.value;
+    console.log("sel perro " + raza);
+    //MOSTRAR GIF/ESPERA
+    document.getElementById('cajaespera').hidden=false;
+    pedirPerrosRaza (3, raza).then((arrayp) => {
+        //QUITAR GIF ESPERA
+        document.getElementById('cajaespera').hidden=true;
+        alert("perros recuperados");
+        arrayp.forEach((perro)=>{console.log(perro);})
+    });
+    console.log("fin sel perro " + raza);
+    
 }
