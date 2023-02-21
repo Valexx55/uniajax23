@@ -1,6 +1,9 @@
 //onload = cargarDatos;
 const URL_DATOS_MUNICIPIOS = "https://datos.comunidad.madrid/catalogo/dataset/7da43feb-8d4d-47e0-abd5-3d022d29d09e/resource/877fa8f5-cd6c-4e44-9df5-0fb60944a841/download/covid19_tia_muni_y_distritos_s.json";
 cargarDatos();//lo voy a ejecutar desde node
+onload = () => dibujarGrafico ();//probamos
+let datos_informe_cam;
+let mapaEstadisticas;
 
 /**
  *   "data": [
@@ -26,9 +29,11 @@ fetch (URL_DATOS_MUNICIPIOS)
 } )
 .then ((datos) => 
 {
+    datos_informe_cam = datos.data;
     console.log(datos.data.length);
     console.log(datos.data[0].municipio_distrito);
     let array_localidades = extraerLocalidades(datos.data);
+    calcularMapa ();
     //let array_localidades2 = extraerLocalidades2(datos.data);
     console.log(`LOCALIDADES = ${array_localidades} TOTAL LOCALIDADES = ${array_localidades.length}`);
     //console.log(`LOCALIDADES = ${array_localidades2} TOTAL LOCALIDADES = ${array_localidades2.length}`);
@@ -120,27 +125,136 @@ function calcular()
     let localidad_seleccionada = document.getElementsByTagName('select')[0].value;
     console.log(localidad_seleccionada);
     //sacar el radio seleccionado
+    let radio_seleccionado = document.querySelector('[name="estadistico"]:checked');
+    console.log(radio_seleccionado.value);
+    let resultado;
+    switch (radio_seleccionado.value) {
+        case 'max':
+            console.log("max seleccionado");
+            resultado = maxTia(localidad_seleccionada);
+            break;
+        case 'min':
+            console.log("min seleccionado");
+            resultado =  minTia(localidad_seleccionada);
+            break;
+        
+        case 'media':
+            console.log("media seleccionado");
+            resultado =  mediaTia(localidad_seleccionada);
+            break;    
+    }
+    mostrarResultado (resultado);
     //hacer el cáclculo correspondiente
     //mostrar
 }
 
-function mediaTia ()
+function mediaTia (localidad)
 {
     let media = 0;
+
+        let datos_tia = datos_informe_cam.filter(registro => registro.municipio_distrito==localidad)
+        .map(registro=>registro.tasa_incidencia_acumulada_ultimos_14dias);
+
+        let total = datos_tia.reduce ((a,b)=> a+b,0);
+        media = total / datos_tia.length;
 
     return media;
 }
 
-function maxTia ()
+function maxTia (localidad)
 {
     let maximo = 0;
+
+        let datos_tia = datos_informe_cam.filter(registro => registro.municipio_distrito==localidad)
+        .map(registro=>registro.tasa_incidencia_acumulada_ultimos_14dias);
+
+        maximo = Math.max(...datos_tia);
 
     return maximo;
 }
 
-function minTia ()
+function minTia (localidad)
 {
     let minimo = 0;
 
+        let datos_tia = datos_informe_cam.filter(registro => registro.municipio_distrito==localidad)
+        .map(registro=>registro.tasa_incidencia_acumulada_ultimos_14dias);
+
+        minimo = Math.min(...datos_tia);
+
     return minimo;
 }
+
+function mostrarResultado (resultado)
+{
+    document.getElementById('resultado').innerHTML = resultado;
+}
+
+function dibujarGrafico (localidad, array_estadisticos)
+{
+    const ctx = document.getElementById('migrafico');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['MAXIMO', 'MINIMO', 'MEDIA'],//ARRAY X
+        datasets: [{
+          label: 'ESTADÍSTICOS TIA '+localidad,
+          data: array_estadisticos,//[12, 19, 3],//ARRAY Y
+          borderWidth: 1,
+          backgroundColor: 'rgb(235, 68, 90)',
+          borderColor: 'rgb(0, 0, 0)'
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+}
+
+//Complejidad =O(3n)
+function mostrarEstadisticos ()
+{
+    let localidad_seleccionada = document.getElementsByTagName('select')[0].value;
+    console.log(localidad_seleccionada);
+    //['MAXIMO', 'MINIMO', 'MEDIA']
+    let array_estadisticos = [];
+    let maximo = maxTia (localidad_seleccionada);
+    let minimo = minTia (localidad_seleccionada);
+    let media = mediaTia (localidad_seleccionada);
+    array_estadisticos = new Array(maximo, minimo, media);
+    dibujarGrafico(localidad_seleccionada, array_estadisticos);
+}
+
+//Complejidad =O(1)
+function mostrarEstadisticosConMapa ()
+{
+    let localidad_seleccionada = document.getElementsByTagName('select')[0].value;
+    let array_estadisticos = mapaEstadisticas.get(localidad_seleccionada);
+    dibujarGrafico(localidad_seleccionada, array_estadisticos);
+}
+
+
+
+//[K Moratalaz, [13, 1, 10]]
+//[K San Blas, [45, 6, 7]]
+
+
+function calcularMapa ()
+{
+    mapaEstadisticas = new Map();
+    let array_localidades = extraerLocalidades(datos_informe_cam);
+    array_localidades.forEach (localidad =>
+        {
+            let maximo = maxTia (localidad);
+            let minimo = minTia (localidad);
+            let media = mediaTia (localidad);
+            let estadisticos = [maximo, minimo, media];
+            mapaEstadisticas.set(localidad, estadisticos);
+        });
+}
+
