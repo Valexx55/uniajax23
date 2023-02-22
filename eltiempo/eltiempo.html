@@ -12,15 +12,29 @@
      crossorigin=""></script>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='eltiempo.css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src='eltiempo.js'></script>
 </head>
 <body>
+    <div class="text-center">
     <button title="encuentrame" onclick="encuentrame()" type="button">ENCUÉNTRAME</button>
+    </div>
     <!-- DONDE IRÁ EL MAPA -->
     <div class="contenedor-mapa">
         <div class="marco-mapa">
             <div id="map"></div>
         </div>
+    </div>
+
+    <div id="info_tiempo" class="text-center" hidden>
+        <span class="badge text-bg-primary"><img alt=""></span>
+        <span class="badge text-bg-secondary"></span>
+        <span class="badge text-bg-success">Success</span>
+        <span class="badge text-bg-danger">Danger</span>
+        <span class="badge text-bg-warning">Warning</span>
+        <span class="badge text-bg-info">Info</span>
+        <span class="badge text-bg-light">Light</span>
+        <span class="badge text-bg-dark">Dark</span>
     </div>
     
 </body>
