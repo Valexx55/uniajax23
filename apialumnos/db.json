@@ -10,7 +10,7 @@
     {
       "nombre": "Valentina",
       "apellido": "Peris",
-      "edad": "42",
+      "edad": "24",
       "email": "valentina@correo.com",
       "id": 13
     },
@@ -27,13 +27,6 @@
       "edad": "38",
       "email": "valerianomorenog@mail.com",
       "id": 15
-    },
-    {
-      "nombre": "VALERIANO",
-      "apellido": "MORENO",
-      "edad": "38",
-      "email": "mp@gal.es",
-      "id": 17
     },
     {
       "nombre": "VALERIANa",

@@ -111,7 +111,8 @@ function exito(posicion) {
 
 function exito(lat, long) {
     dibujarUbicacion(lat, long);
-    obtenerElTiempo(lat, long);
+    //obtenerElTiempo(lat, long);
+    obtenerElTiempoJSONP(lat, long);
 }
 
 function fracaso() {
@@ -172,6 +173,29 @@ function mostarInfoTiempo(info_tiempo) {
     //TODO: MEJORAR LA PRESETANCIÓN DE LOCALIDAD Y EL ICONO
     //TODO: TRADUCIR A FECHA ACTUAL LOS TIMESTAMP DE UNIX
 
+}
+
+function obtenerElTiempoJSONP (latitud, longitud)
+{
+    //CONSUMIMOS EL API DE OPENWHEATHER POR JSONP
+    //1) creo un elemento script
+    //2) le seteo en el atributo src la URL con la llamada JSONP
+    //3) añado ese elemento al cuerpo del HTML
+
+    //al hacer esto, autómaticamente se ejecuta el script y se carga y se produce el callback
+    let elemento_script = document.createElement("script");
+    elemento_script.src = URI_TIEMPO + "&lat="+latitud+"&lon="+longitud+"&callback=procesarInfoTiempoJSONP";
+    document.body.append (elemento_script);
+
+
+
+}
+
+function procesarInfoTiempoJSONP (infotTJson)
+{
+    console.log("INFO RX JSONP");
+    console.log(infotTJson);
+    mostarInfoTiempo(infotTJson);
 }
 
 function obtenerInfoTiempo() {
